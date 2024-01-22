@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Kolekcja</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 0;
+            background-color: #fff;
+            margin-top: 5px;
+            padding: 10px;
+        }
+
+        #generatedPhrase {
+            font-size: 3vw;
+            margin-top: 22.5%;
+            position: static;
+        }
+
+        #generateButton {
+            width: 120px;
+            height: 40px;
+            background-color: #000;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            color: #fff;
+            filter: blur(4px);
+            position: fixed;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #arrowLink {
+            position: fixed;
+            top: 15px;
+            right: 30px;
+            cursor: pointer;
+            font-size: 3vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="generatedPhrase"></div>
+    <button id="generateButton"></button>
+    <div id="arrowLink" onclick="redirectToIndex()">&#8592;</div>
+    <script>
+        'use strict';
+
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchData();
+            document.getElementById('generateButton').addEventListener('click', generateNewCombination);
+        });
+
+        function fetchData() {
+            var xhr;
+
+            if (typeof XMLHttpRequest !== 'undefined') {
+                xhr = new XMLHttpRequest();
+            } else if (typeof require === 'function') {
+                var fs = require('fs');
+                var data = fs.readFileSync('words.txt', 'utf8');
+                processFileContent(data);
+                return;
+            }
+
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    processFileContent(xhr.responseText);
+                }
+            };
+
+            xhr.open('GET', 'words.txt', true);
+            xhr.send();
+        }
+
+        function processFileContent(data) {
+            var wordsArray = data.split('\n').filter(Boolean);
+            displayGeneratedPhrase(generatePhrase(wordsArray));
+        }
+
+        function generatePhrase(wordsArray) {
+            var uniqueWords = Array.from(new Set(wordsArray));
+            var phrase = '';
+
+            for (var i = 0; i < 10; i++) {
+                var randomWord = getRandomElement(uniqueWords);
+                uniqueWords.splice(uniqueWords.indexOf(randomWord), 1);
+
+                var wordToAdd = i === 0 ? randomWord.charAt(0).toUpperCase() + randomWord.slice(1) : randomWord;
+
+                if (i > 0 && randomWord.toLowerCase() === 'że') {
+                    phrase = phrase.replace(/\s+$/, '') + ', ';
+                }
+
+                phrase += wordToAdd;
+
+                if (i < 9) {
+                    phrase += ' ';
+                }
+            }
+
+            var lastWord = phrase.split(' ').pop();
+            if (lastWord.length <= 3) {
+                return generatePhrase(wordsArray);
+            }
+
+            phrase += '.';
+            return phrase;
+        }
+
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function displayGeneratedPhrase(phrase) {
+            document.getElementById('generatedPhrase').innerText = phrase;
+        }
+
+        function generateNewCombination() {
+            fetchData();
+        }
+
+        function redirectToIndex() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolekcja</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            color: #000; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #collectionHeader {
+            font-size: 3vw;
+            margin-bottom: 10px;
+            text-align: left;
+            justify-content: left;
+        }
+
+        .page-links-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .text-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            border: 2px solid #000;
+            color: #000;
+            font-size: 1em;
+            text-align: center;
+            padding: 20px;
+            margin-right: 20px;
+            height: 100%;
+            cursor: pointer; 
+            text-decoration: none;
+        }
+
+        .text-box strong {
+            font-size: 1.5em;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .text-box p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="collectionHeader">
+        Kolekcja
+    </div>
+
+    <div class="page-links-container">        
+        <a href="1.html" class="text-box">
+            <strong>1</strong><br>
+            <p>Kolekcja ulotek, na podstawie których generowany jest tekst na drugiej podstronie.<br> Wszystkie z nich odnalezione w swoich i nieswoich skrzynkach pocztowych</p>
+        </a>
+        <a href="2.html" class="text-box">
+            <strong>2</strong><br>
+            <p>Generator tekstu tworzący nowe ulotki na podstawie tych, które zeskanowałem</p>
+        </a>
+    </div>
+
+</body>
+</html>
